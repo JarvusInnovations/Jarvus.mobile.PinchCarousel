@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>StackPanel Example</title>
+		
+		<link rel="stylesheet" type="text/css" href="http://dev.sencha.com/deploy/touch/resources/css/sencha-touch.css">
+		<script type="text/javascript" src="http://dev.sencha.com/deploy/touch/sencha-touch.js"></script>
+		
+
+		<script type="text/javascript" src="ImageViewer.js"></script>
+		<script type="text/javascript" src="PinchCarousel.js"></script>
+		
+		<script type="text/javascript">
+			Ext.regApplication({
+			
+			    name: 'SampleApp'
+			    
+			    ,launch: function() {
+			    
+					// launch the StackPanel-powered viewport
+				    this.views.viewport = new Jarvus.mobile.PinchCarousel({
+				    	fullscreen: true
+				    	,style: {
+				    		backgroundColor: '#000'
+				    	}
+				    	
+						,images: [
+							'http://placekitten.com/800/600'
+							,'http://placekitten.com/1024/600'
+							,'http://placekitten.com/2048/1024'
+						]
+				    }); // end PinchCarousel constructor
+				    
+				    
+				    
+			    }
+			    
+			
+			});
+		</script>
+		
+		
+	</head>
+
+	<body></body>
+</html>
