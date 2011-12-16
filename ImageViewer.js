@@ -7,6 +7,7 @@ Jarvus.mobile.ImageViewer = Ext.extend(Ext.Component, {
 	,loadingMask: true
 	,previewSrc: false
 	,imageSrc: false
+	,initOnActivate: false
 
 	,cls: 'imageBox'
 	,scroll: 'both'
@@ -17,59 +18,65 @@ Jarvus.mobile.ImageViewer = Ext.extend(Ext.Component, {
 	,initComponent: function() {
 		Jarvus.mobile.ImageViewer.superclass.initComponent.apply(this, arguments);
 	
-		this.on('activate', function() {
+		if(this.initOnActivate)
+			this.on('activate', this.initViewer, this, {delay: 10, single: true});
+		else
+			this.on('afterrender', this.initViewer, this, {delay: 10, single: true});
+
+	}
+	
+	
+	,initViewer: function() {
 		
-			//	disable scroller
-			this.scroller.disable();
+		//	disable scroller
+		this.scroller.disable();
 
-			// mask image viewer
-			if(this.loadingMask)
-				this.el.mask(Ext.LoadingSpinner);
+		// mask image viewer
+		if(this.loadingMask)
+			this.el.mask(Ext.LoadingSpinner);
 
-			// retrieve DOM els
-			this.figEl = this.el.down('figure');
-			this.imgEl = this.figEl.down('img');
+		// retrieve DOM els
+		this.figEl = this.el.down('figure');
+		this.imgEl = this.figEl.down('img');
 
-			// apply required styles
-			this.figEl.setStyle({
-				overflow: 'hidden'
-				,display: 'block'
-				,margin: 0
+		// apply required styles
+		this.figEl.setStyle({
+			overflow: 'hidden'
+			,display: 'block'
+			,margin: 0
+		});
+
+		this.imgEl.setStyle({
+			'-webkit-user-drag': 'none'
+			,'-webkit-transform-origin': '0 0'
+			,'visibility': 'hidden'
+		});
+
+		// show preview
+		if(this.previewSrc)
+		{
+			this.el.setStyle({
+				backgroundImage: 'url('+this.previewSrc+')'
+				,backgroundPosition: 'center center'
+				,backgroundRepeat: 'no-repeat'
+				,webkitBackgroundSize: 'contain'
 			});
+		}
 
-			this.imgEl.setStyle({
-				'-webkit-user-drag': 'none'
-				,'-webkit-transform-origin': '0 0'
-				,'visibility': 'hidden'
-			});
+		// attach event listeners
+		this.mon(this.imgEl, {
+			scope: this
+			,load: this.onImageLoad
+			,doubletap: this.onDoubleTap
+			,pinchstart: this.onImagePinchStart
+			,pinch: this.onImagePinch
+			,pinchend: this.onImagePinchEnd
+		});
 
-			// show preview
-			if(this.previewSrc)
-			{
-				this.el.setStyle({
-					backgroundImage: 'url('+this.previewSrc+')'
-					,backgroundPosition: 'center center'
-					,backgroundRepeat: 'no-repeat'
-					,webkitBackgroundSize: 'contain'
-				});
-			}
-
-			// attach event listeners
-			this.mon(this.imgEl, {
-				scope: this
-				,load: this.onImageLoad
-				,doubletap: this.onDoubleTap
-				,pinchstart: this.onImagePinchStart
-				,pinch: this.onImagePinch
-				,pinchend: this.onImagePinchEnd
-			});
-
-			// load image
-			if(this.imageSrc)
-				this.loadImage(this.imageSrc);
-				
-		}, this, {delay: 10, single: true});
-
+		// load image
+		if(this.imageSrc)
+			this.loadImage(this.imageSrc);
+			
 	}
 	
 	,loadImage: function(src) {	

@@ -38,6 +38,7 @@ Jarvus.mobile.PinchCarousel = Ext.extend(Ext.Carousel, {
 
 		image = Ext.apply({
 			xtype: 'imageviewer'
+			,initOnActivate: true
 			,loadingMask: this.loadingMask
 		}, typeof image == "string" ? {imageSrc: image} : image);
 		

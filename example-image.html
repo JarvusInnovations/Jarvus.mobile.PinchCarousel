@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>ImageViewer Example</title>
+		
+		<link rel="stylesheet" type="text/css" href="http://dev.sencha.com/deploy/touch/resources/css/sencha-touch.css">
+		<script type="text/javascript" src="http://dev.sencha.com/deploy/touch/sencha-touch.js"></script>
+		
+
+		<script type="text/javascript" src="ImageViewer.js"></script>
+		
+		<script type="text/javascript">
+			Ext.regApplication({
+			
+			    name: 'ImageExample'
+			    
+			    ,launch: function() {
+			    
+					// launch the ImageViewer-powered viewport
+				    this.views.viewport = new Jarvus.mobile.ImageViewer({
+				    	fullscreen: true
+				    	,style: {
+				    		backgroundColor: '#000'
+				    	}
+				    	,imageSrc: 'http://placekitten.com/2048/1024'
+				    });
+				    
+				    
+				    
+			    }
+			    
+			
+			});
+		</script>
+		
+		
+	</head>
+
+	<body></body>
+</html>
