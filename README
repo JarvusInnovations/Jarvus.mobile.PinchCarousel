@@ -1,3 +1,6 @@
+Author: Chris Alfano <chris@jarv.us>
+License: GNU GPLv3
+
 An extension of Ext.Carousel for Sencha Touch that adds pinch zooming for images.
 
 Usage:
